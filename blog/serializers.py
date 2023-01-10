@@ -73,3 +73,6 @@ class BlogSerializer(serializers.ModelSerializer):
     def get_likes_count(self, obj):
         return obj.likes.count()
 
+
+class BlogLikeSerializer(serializers.Serializer):
+    action = serializers.CharField()

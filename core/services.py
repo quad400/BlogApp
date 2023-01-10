@@ -9,22 +9,20 @@ User = get_user_model()
 
 class UserAuthService:
     @staticmethod
-    def register_user(username=None,email=None,password=None,confirm_password=None):
+    def register_user(username=None,email=None,password=None):
         register_serializer = RegisterSerializer(
             data=remove_none_values({
                 "username": username,
                 "email": email,
                 "password": password,
-                "confirm_password": confirm_password,
             })
         )
 
-        if register_serializer.is_valid(raise_exception=False):
-            register_serializer.save()
-            token = Token.objects.create(user=register_serializer.instance)
-        else:  
-          raise Exception(register_serializer.errors)
-
+        if not register_serializer.is_valid():
+            raise Exception(register_serializer.errors)
+            
+        register_serializer.save()
+        token = Token.objects.create(user=register_serializer.instance)
 
         return {
             "message":"Account created successfully",

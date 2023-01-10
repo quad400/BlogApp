@@ -1,16 +1,17 @@
 import requests
 from getpass import getpass
 
-endpoint = 'http://127.0.0.1:8000/auth/signup/'
+endpoint = 'http://127.0.0.1:8000/api/auth/signup/'
 
 
 
 
-username = input("What is your username?\n")
-email = input("What is your email?\n")
-password = getpass("What is your password?\n")
-r = requests.post(endpoint, json={'username': username, 'email':email, 
-                'password': password}) 
+# username = input("Username: ")
+# email = input("Email: ")
+# password = getpass("Password: ")
+# confirm_password = getpass("Retype Password: ")
+r = requests.post(endpoint, json={'username': "quad", 'email': "quad@gmail.com", 
+                'password': "adediji09"}) 
 
 
 if r.status_code == 201:

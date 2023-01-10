@@ -6,7 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from core.permissions import IsOwnerOrReadOnly
 from core.authentication import TokenAuthentication
-from .serializers import BlogSerializer,BlogCommentSerializer
+from .serializers import BlogSerializer,BlogCommentSerializer,BlogLikeSerializer
 from .models import Blog,BlogComment
 
 class BlogListAPI(generics.ListAPIView):
@@ -74,11 +74,15 @@ class BlogDeleteAPI(generics.DestroyAPIView):
         ]
 
 
-class BlogLikesAPI(generics.CreateAPIView):
+class BlogLikesAPI(APIView):
 
-    serializer_class = BlogSerializer
+    # serializer_class = BlogSerializer
     authentication_classes = [authentication.SessionAuthentication, TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        serializer = BlogLikeSerializer()
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request, *args, **kwargs):
         slug = kwargs["slug"]
@@ -103,12 +107,8 @@ class BlogLikesAPI(generics.CreateAPIView):
             else:
                 return Response({f"{action} is not a valid action"}, status=status.HTTP_400_BAD_REQUEST)
 
-        serializer = self.get_serializer(instance=obj, context={"request": request})
+        serializer = BlogSerializer(obj, context={"request": request})
         return Response(serializer.data, status=status.HTTP_200_OK)
-
-    def get_object(self):
-        action = self.request.get("action")
-        return super().get_object()
 
 
 class BlogCommentCreateListAPI(APIView):

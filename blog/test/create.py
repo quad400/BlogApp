@@ -13,7 +13,8 @@ password = getpass("What is your password?\n")
 data = {
     "title":"You no sabi me ni",
     "desc": "hellow i can do as i like",
-    "content": "what do you want to do here"
+    "content": "what do you want to do here",
+    "category": "programming"
 }
 
 # def token_converter(data):

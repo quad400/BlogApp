@@ -1,12 +1,14 @@
 import os
+from dotenv import load_dotenv
 from datetime import timedelta
 from pathlib import Path
 
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-SECRET_KEY = 'django-insecure-+1rduouk%w=(_u5w4ye8zjtw9%v373&rb+_idcrnrhks(z74ef'
+SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -23,13 +25,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     # thirdparty
     'rest_framework',
     'rest_framework.authtoken',
-    # 'rest_framework_simplejwt',
+
     # apps
-    'user',
     'blog',
+    'user',
 ]
 
 MIDDLEWARE = [

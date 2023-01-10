@@ -1,8 +1,15 @@
+import enum
 from django.db import models
-from django.contrib.auth import get_user_model
 from django.conf import settings
 from django.utils.text import slugify
-from rest_framework.pagination import LimitOffsetPagination
+from django.utils import timezone
+from rest_framework.response import Response
+from rest_framework.status import (
+                HTTP_404_NOT_FOUND,
+                HTTP_200_OK,
+                HTTP_400_BAD_REQUEST,
+                HTTP_401_UNAUTHORIZED,    
+            )
 
 User = settings.AUTH_USER_MODEL
 
@@ -61,4 +68,4 @@ class Blog(models.Model):
             self.slug = slugify(self.title)
         super().save(*args, **kwargs)
 
-    
+
